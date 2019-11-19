@@ -1,6 +1,6 @@
 package com.leetcode.structure.string;
 
-public class _8String2Integer {
+public class String2Integer$8 {
     public int myAtoi(String str) {
         if (str == null || str.isEmpty()) {
             return 0;
@@ -63,7 +63,7 @@ public class _8String2Integer {
     }
 
     public static void main(String[] args) {
-        System.out.println(new _8String2Integer().myAtoi("-2147483649"));
+        System.out.println(new String2Integer$8().myAtoi("-2147483649"));
     }
 
 }

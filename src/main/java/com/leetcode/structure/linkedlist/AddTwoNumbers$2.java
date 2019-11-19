@@ -1,6 +1,6 @@
 package com.leetcode.structure.linkedlist;
 
-public class _2AddTwoNumbers {
+public class AddTwoNumbers$2 {
     public ListNode addTwoNumbers(ListNode l1, ListNode l2) {
         ListNode root = new ListNode(0);
         ListNode result = root;

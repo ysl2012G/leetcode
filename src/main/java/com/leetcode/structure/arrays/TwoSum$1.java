@@ -4,7 +4,7 @@ import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
 
-public class _1TwoSum {
+public class TwoSum$1 {
 
     public int[] twoSum(int[] nums, int target) {
         int len = nums.length;
@@ -25,6 +25,6 @@ public class _1TwoSum {
     public static void main(String[] args) {
         int[] nums = {3, 2, 4};
         int target = 6;
-        Arrays.stream(new _1TwoSum().twoSum(nums,target)).forEach(System.out::println);
+        Arrays.stream(new TwoSum$1().twoSum(nums,target)).forEach(System.out::println);
     }
 }

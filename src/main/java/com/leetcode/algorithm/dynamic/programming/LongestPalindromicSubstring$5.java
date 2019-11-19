@@ -1,6 +1,6 @@
 package com.leetcode.algorithm.dynamic.programming;
 
-public class _5LongestPalindromicSubstring {
+public class LongestPalindromicSubstring$5 {
 	public String longestPalindrome(String s) {
 	    return manacher(s);
 //		return dynamicProgramming(s);
@@ -87,7 +87,7 @@ public class _5LongestPalindromicSubstring {
 
 
 	public static void main(String[] args) {
-		System.out.println(new _5LongestPalindromicSubstring().longestPalindrome("abaa"));
+		System.out.println(new LongestPalindromicSubstring$5().longestPalindrome("abaa"));
 	}
 
 }

@@ -1,6 +1,6 @@
 package com.leetcode.algorithm.binary.search;
 
-public class _4MedianOfTwoSortedArrays {
+public class MedianOfTwoSortedArrays$4 {
 	public double findMedianSortedArrays(int[] nums1, int[] nums2) {
 		int len1 = nums1.length;
 		int len2 = nums2.length;
@@ -56,7 +56,7 @@ public class _4MedianOfTwoSortedArrays {
 	public static void main(String[] args) {
 		int[] nums1 = {1,3};
 		int[] nums2 = {2};
-		System.out.println(new _4MedianOfTwoSortedArrays().findMedianSortedArrays(nums1,nums2));
+		System.out.println(new MedianOfTwoSortedArrays$4().findMedianSortedArrays(nums1,nums2));
 	}
 
 }

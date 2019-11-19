@@ -1,6 +1,6 @@
 package com.leetcode.algorithm.math;
 
-public class _7ReverseInteger {
+public class ReverseInteger$7 {
     public int reverse(int x) {
         int result = 0 ;
         while ( x != 0) {

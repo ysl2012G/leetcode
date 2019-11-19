@@ -3,7 +3,7 @@ package com.leetcode.algorithm.two.pointer;
 import java.util.HashSet;
 import java.util.Set;
 
-public class _3LongestSubstring {
+public class LongestSubstring$3 {
     public int lengthOfLongestSubstring(String s) {
         if (s == null || s.isEmpty()) {
             return 0;
@@ -37,7 +37,7 @@ public class _3LongestSubstring {
 
 
     public static void main(String[] args) {
-        System.out.println(new _3LongestSubstring().lengthOfLongestSubstring("pwwkewst"));
+        System.out.println(new LongestSubstring$3().lengthOfLongestSubstring("pwwkewst"));
     }
 
 

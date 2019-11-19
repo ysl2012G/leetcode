@@ -1,6 +1,6 @@
 package com.leetcode.structure.string;
 
-public class _6ZigzagConversion {
+public class ZigzagConversion$6 {
     public String convert(String s, int numRows) {
         if (s == null || s.isEmpty()) {
             return s;
