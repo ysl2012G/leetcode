@@ -1,48 +1,71 @@
 package com.leetcode.chanllenge.leetcode212;
 
+import java.util.Arrays;
+import java.util.Comparator;
+import java.util.PriorityQueue;
+
 public class PathWithMinEffort {
-    public int minimumEffortPath2(int[][] heights) {
+
+    private static final int[][] directions = {{0, 1}, {0, -1}, {1, 0}, {-1, 0}};
+
+    private static class Node {
+        private final int x;
+        private final int y;
+        private int effort;
+
+        private Node(int x, int y, int effort) {
+            this.x = x;
+            this.y = y;
+            this.effort = effort;
+        }
+
+        public int getEffort() {
+            return effort;
+        }
+    }
+
+    public int minimumEffortPath(int[][] heights) {
         int row = heights.length;
         int col = heights[0].length;
-        final int memo[][] = new int[row][col];
 
-        memo[0][0] = 0;
-        // first row
-        for (int j = 1; j < col; ++j) {
-            final int effort = Math.abs(heights[0][j] - heights[0][j - 1]);
-            memo[0][j] = Math.max(memo[0][j - 1], effort);
+        final int[][] efforts = new int[row][col];
+        for (int[] rowEffort : efforts) {
+            Arrays.fill(rowEffort, Integer.MAX_VALUE);
         }
 
-        // first col
-        for (int i = 1; i < row; ++i) {
-            final int effort = Math.abs(heights[i][0] - heights[i - 1][0]);
-            memo[i][0] = Math.max(memo[i - 1][0], effort);
-        }
+        final boolean[][] isVisited = new boolean[row][col];
 
-        for (int i = 1; i < row; ++i) {
-            for (int j = i; j < col; ++j) {
-                // from top
-                int effort = Math.abs(heights[i][j] - heights[i - 1][j]);
-                int minEffortFromTop = Math.max(memo[i - 1][j], effort);
-                // from left
-                effort = Math.abs(heights[i][j] - heights[i][j - 1]);
-                int minEffortFromLeft = Math.max(memo[i][j - 1], effort);
+        final PriorityQueue<Node> priorityQueue = new PriorityQueue<>(Comparator.comparingInt(Node::getEffort));
+        priorityQueue.add(new Node(0, 0, 0));
 
-                memo[i][j] = Math.min(minEffortFromTop, minEffortFromLeft);
+        while (!priorityQueue.isEmpty()) {
+            final Node current = priorityQueue.poll();
+            isVisited[current.x][current.y] = true;
+            if (current.x == row -1 && current.y == col - 1) {
+                return current.effort;
+            }
+            for (int[] direction: directions) {
+                final int nextX = current.x + direction[0];
+                final int nextY = current.y + direction[1];
+                if (nextX < 0 || nextX >= row || nextY < 0 || nextY >= col || isVisited[nextX][nextY]) {
+                    continue;
+                }
+
+                final int currentEffort = Math.max(Math.abs(heights[nextX][nextY] - heights[current.x][current.y]), current.effort);
+                if (currentEffort < efforts[nextX][nextY]) {
+                    efforts[nextX][nextY] = currentEffort;
+                    priorityQueue.offer(new Node(nextX, nextY, currentEffort));
+                }
             }
         }
 
-        return memo[row - 1][col - 1];
-    }
-
-    private int[][] heigths;
-    public int minimumEffortPath(int[][] heights) {
-        this.heigths = heights;
+        return -1;
 
     }
 
     public static void main(String[] args) {
-        final int[][] heights = {{1,2,1,1,1},{1,2,1,2,1},{1,2,1,2,1},{1,2,1,2,1},{1,1,1,2,1}};
-        new PathWithMinEffort().minimumEffortPath(heights);
+//        final int[][] heights = {{1,2,1,1,1},{1,2,1,2,1},{1,2,1,2,1},{1,2,1,2,1},{1,1,1,2,1}};
+        final int[][] heights = {{1, 2, 2}, {3, 8, 2}, {5, 3, 5}};
+        System.out.println(new PathWithMinEffort().minimumEffortPath(heights));
     }
 }
