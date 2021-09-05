@@ -1,4 +1,4 @@
-package com.leetcode.structure.arrays;
+package com.leetcode.structure.segment.tree;
 
 public class RangeSumQueryMutable$307 {
     private int[] tree;
