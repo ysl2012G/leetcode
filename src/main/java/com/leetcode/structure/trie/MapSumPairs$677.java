@@ -1,4 +1,4 @@
-package com.leetcode.structure.tree;
+package com.leetcode.structure.trie;
 
 import java.util.HashMap;
 import java.util.Map;
