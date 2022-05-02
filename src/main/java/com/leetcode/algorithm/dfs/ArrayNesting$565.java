@@ -28,7 +28,6 @@ public class ArrayNesting$565 {
         if (!vals.add(val)) {
             return vals.size();
         }
-
         marked[index] = true;
         return dfs(vals, val, nums);
     }
