@@ -4,84 +4,51 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 import java.util.TreeSet;
 
 public class AccountsMerge$721 {
-    private static class UnionFind {
-        private int[] root;
-        private int[] size;
+	public List<List<String>> accountsMerge(List<List<String>> accounts) {
+        final Map<String, String> owner = new HashMap<>();
+        final Map<String, String> parents = new HashMap<>();
 
-        UnionFind(int len) {
-            this.root = new int[len];
-            this.size = new int[len];
-            for (int i = 0; i < len; ++i) {
-                root[i] = i;
-                size[i] = 1;
+        final Map<String, TreeSet<String>> unions = new HashMap<>();
+
+        for (List<String> account : accounts) {
+            for (int i = 1; i < account.size(); ++i) {
+                parents.put(account.get(i), account.get(i));
+                owner.put(account.get(i), account.get(0));
             }
         }
 
-        int find(int p) {
-            while (p != root[p]) {
-                p = root[p];
-            }
-            return p;
-        }
-
-        void union(int p, int q) {
-            final int rootP = find(p);
-            final int rootQ = find(q);
-            if (rootP == rootQ) {
-                return;
-            }
-
-            if (size[rootP] < size[rootQ]) {
-                root[rootP] = rootQ;
-                size[rootQ] += size[rootP];
-            } else {
-                root[rootQ] = rootP;
-                size[rootP] += size[rootQ];
-            }
-        }
-    }
-
-
-
-    public List<List<String>> accountsMerge(List<List<String>> accounts) {
-        final int accountNum = accounts.size();
-        final UnionFind unionFind = new UnionFind(accountNum);
-
-        final Map<String, Integer> emailMappings = new HashMap<>();
-
-        for (int i = 0; i < accountNum; ++i) {
-            final int accountInfoNum = accounts.get(i).size();
-
-            for (int j = 1; j < accountInfoNum; ++j) {
-                final String email = accounts.get(i).get(j);
-                if (!emailMappings.containsKey(email)) {
-                    emailMappings.put(email, i);
-                } else {
-                    unionFind.union(i, emailMappings.get(email));
-                }
+        for (List<String> account : accounts) {
+            final String parent = find(account.get(1), parents);
+            for (int i = 2; i < account.size(); ++i) {
+                parents.put(find(account.get(i), parents), parent);
             }
         }
 
-        final Map<Integer, TreeSet<String>> merges = new HashMap<>();
-        for (Map.Entry<String, Integer> entry : emailMappings.entrySet()) {
-            final String email = entry.getKey();
-            final int accountId = unionFind.find(entry.getValue());
-            if (!merges.containsKey(accountId)) {
-                merges.put(accountId, new TreeSet<>());
+        for (List<String> account : accounts) {
+            final String parent = find(account.get(1), parents);
+            if (!unions.containsKey(parent)) {
+                unions.put(parent, new TreeSet<>());
             }
-            merges.get(accountId).add(email);
+            for (int i = 1; i < account.size(); ++i) {
+                unions.get(parent).add(account.get(i));
+            }
         }
 
         final List<List<String>> res = new ArrayList<>();
-        for (Map.Entry<Integer, TreeSet<String>> entry : merges.entrySet()) {
-            final String accountName = accounts.get(entry.getKey()).get(0);
-            final List<String> accountInfo = new ArrayList<>(entry.getValue());
-            accountInfo.add(0, accountName);
-            res.add(accountInfo);
+        for (String parent : unions.keySet()) {
+            final List<String> emails =new ArrayList<>(unions.get(parent));
+            emails.add(0, owner.get(parent));
+            res.add(emails);
         }
         return res;
-    }
+   }
+
+	private String find(String str, Map<String, String> parents) {
+		final String parent = parents.get(str);
+		return Objects.equals(parent, str) ? parent : find(parent, parents);
+	}
 }
